@@ -4,29 +4,62 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "Launch NestJS Application",
-            "program": "${workspaceFolder}/${input:programPath}",
-            "preLaunchTask": "tsc: build - tsconfig.json",
-            "outFiles": [
-                "${workspaceFolder}/dist/**/*.js"
-            ],
-            "cwd": "${workspaceFolder}",
+            "name": "Debug NestJS App",
+            "runtimeExecutable": "npm",
             "runtimeArgs": [
-                "--nolazy"
+                "run",
+                "start:debug"
             ],
-            "sourceMaps": true,
-            "envFile": "${workspaceFolder}/.env"
-        }
-    ],
-    "inputs": [
-        {
-            "type": "pickString",
-            "id": "programPath",
-            "description": "Select the entry point for your application",
-            "options": [
-                "src/main.ts",
-                "src/app.module.ts"
+            "restart": true,
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen",
+            "port": 9229,
+            "skipFiles": [
+                "<node_internals>/**"
             ]
+        },
+        {
+            "type": "node",
+            "request": "attach",
+            "name": "Attach to NestJS",
+            "port": 9229,
+            "restart": true,
+            "skipFiles": [
+                "<node_internals>/**"
+            ]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Run Current Test File",
+            "program": "${workspaceFolder}/node_modules/.bin/jest",
+            "args": [
+                "--config",
+                "jest.config.js",
+                "--runInBand",
+                "${fileBasename}"
+            ],
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen",
+            "windows": {
+                "program": "${workspaceFolder}/node_modules/jest/bin/jest"
+            }
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Jest Debug All Tests",
+            "program": "${workspaceFolder}/node_modules/.bin/jest",
+            "args": [
+                "--config",
+                "jest.config.js",
+                "--runInBand"
+            ],
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen",
+            "windows": {
+                "program": "${workspaceFolder}/node_modules/jest/bin/jest"
+            }
         }
     ]
 }
