@@ -1,0 +1,15 @@
+name: "Echo hello world"
+on:
+  workflow_call:
+    inputs:
+      deploy-env:
+        required: false
+        type: string
+        default: "development"
+        description: "The environment to deploy to"
+jobs:
+  echo-hello:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Echo Hello World
+      run: echo "Hello World in ${{ inputs.deploy-env }}"

@@ -33,7 +33,7 @@ export class AuthService {
             });
             return {
                 ...user,
-                accessToken: this.jwtService.sign({ userId: user.id, email: user.email })
+                accessToken: this.jwtService.sign({ id: user.id, email: user.email })
             };
         } catch (error) {
             if (error instanceof Prisma.PrismaClientKnownRequestError) {
@@ -59,14 +59,12 @@ export class AuthService {
             throw new UnauthorizedException('Invalid credentials');
         }
 
-        delete user.password;
         return {
-            ...user,
-            accessToken: this.jwtService.sign({ userId: user.id, email: user.email })
+            accessToken: this.jwtService.sign({ id: user.id, email: user.email })
         };
     }
 
-    async validateUser(userId: number) {
+    async getUser(userId: number) {
         return this.prisma.user.findUnique({
             where: { id: userId },
             select: {
