@@ -6,6 +6,6 @@ on:
 
 jobs:
   call-reusable-workflow:
-    uses: ./.github/workflows/reusable-workflows/echo.yml
+    uses: ./.github/workflows/echo.yml
     with:
       deploy-env: "production"
