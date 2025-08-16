@@ -9,3 +9,8 @@ jobs:
     uses: ./.github/workflows/echo.yml
     with:
       deploy-env: "production"
+  print-output:
+    runs-on: ubuntu-latest
+    needs: call-reusable-workflow
+    steps:
+    - run: echo "App version is ${{ needs.call-reusable-workflow.outputs.app-version }}"

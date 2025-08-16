@@ -1,4 +1,5 @@
 name: "Echo hello world"
+
 on:
   workflow_call:
     inputs:
@@ -7,9 +8,20 @@ on:
         type: string
         default: "development"
         description: "The environment to deploy to"
+    outputs:
+      app-version:
+        description: "The version of the app (example output)"
+        value: ${{ jobs.echo-hello.outputs.app-version }}
+
 jobs:
   echo-hello:
     runs-on: ubuntu-latest
+    outputs:
+      app-version: ${{ steps.set-output.outputs.app_version }}
     steps:
     - name: Echo Hello World
       run: echo "Hello World in ${{ inputs.deploy-env }}"
+
+    - name: Set output
+      id: set-output
+      run: echo "app_version=1.0.0" >> $GITHUB_OUTPUT
