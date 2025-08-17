@@ -21,3 +21,5 @@ jobs:
 
       - name: Print branch
         run: echo "branch is $GITHUB_REF"
+      - name: Print branch again
+        run: echo "branch is $GITHUB_REF"
