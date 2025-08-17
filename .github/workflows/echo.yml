@@ -16,6 +16,7 @@ on:
 jobs:
   echo-hello:
     runs-on: ubuntu-latest
+    environment: 'production'
     outputs:
       app-version: ${{ steps.set-output.outputs.app_version }}
     steps:

@@ -16,5 +16,5 @@ jobs:
     - name: Print version
       run: echo "App version is ${{ needs.call-reusable-workflow.outputs.app-version }}"
     - name: Print branch
-      run: echo "branch is $GITHUB_REF"
+      run: echo "branch is $GIT"
     
