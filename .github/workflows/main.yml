@@ -9,12 +9,15 @@ jobs:
     uses: ./.github/workflows/echo.yml
     with:
       deploy-env: "production"
+    secrets: inherit
+
   print-output:
     runs-on: ubuntu-latest
     needs: call-reusable-workflow
+    environment: production
     steps:
-    - name: Print version
-      run: echo "App version is ${{ needs.call-reusable-workflow.outputs.app-version }}"
-    - name: Print branch
-      run: echo "branch is $GIT"
-    
+      - name: Print version
+        run: echo "App version is ${{ needs.call-reusable-workflow.outputs.app-version }}"
+
+      - name: Print branch
+        run: echo "branch is $GITHUB_REF"
