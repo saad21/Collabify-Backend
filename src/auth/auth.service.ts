@@ -36,11 +36,6 @@ export class AuthService {
                 accessToken: this.jwtService.sign({ id: user.id, email: user.email })
             };
         } catch (error) {
-            if (error instanceof Prisma.PrismaClientKnownRequestError) {
-                if (error.code === 'P2002') {
-                    throw new ConflictException('Email already exists');
-                }
-            }
             throw error;
         }
     }
