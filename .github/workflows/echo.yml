@@ -1,24 +1,16 @@
-name: "Echo Workflow"
+name: Echo Success
 
 on:
   workflow_call:
     inputs:
-      deploy-env:
+      message:
+        description: "Message to print"
         required: true
         type: string
-    outputs:
-      app-version:
-        value: ${{ jobs.echo-hello.outputs.app-version }}
 
 jobs:
-  echo-hello:
+  echo-job:
     runs-on: ubuntu-latest
-    environment: production 
-    outputs:
-      app-version: ${{ steps.set-version.outputs.version }}
     steps:
-      - id: set-version
-        run: echo "version=${{ inputs.deploy-env }}-1.0" >> $GITHUB_OUTPUT
-
-      - name: Echo Hello World
-        run: echo "Hello World in ${{ inputs.deploy-env }}"
+      - name: Print message
+        run: echo "${{ inputs.message }}"
