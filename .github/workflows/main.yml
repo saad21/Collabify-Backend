@@ -1,25 +1,31 @@
-name: "My first job ever"
+name: 'Build and deploy'
 
 on:
-  push:
-    branches: [ main ]
+  workflow_call:
+    inputs:
+      deploy-env:
+        description: 'The environment to deploy to'
+        required: false
+        type: string
+        default: 'staging'
 
 jobs:
-  call-reusable-workflow:
-    uses: ./.github/workflows/echo.yml
-    with:
-      deploy-env: "production"
-    secrets: inherit
-
-  print-output:
+  build:
     runs-on: ubuntu-latest
-    needs: call-reusable-workflow
-    environment: production
     steps:
-      - name: Print version
-        run: echo "App version is ${{ needs.call-reusable-workflow.outputs.app-version }}"
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-      - name: Print branch
-        run: echo "branch is $GITHUB_REF"
-      - name: Print branch again
-        run: echo "branch is $GITHUB_REF"
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run tests
+        run: npm test
+
+      - name: Build project
+        run: npm run build
